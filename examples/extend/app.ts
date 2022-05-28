@@ -4,17 +4,32 @@ axios({
   url: '/extend/post',
   method: 'post',
   data: {
-    msg: 'hi'
+    msg: 'hi kebi'
   }
 })
 
-axios.request({
-  url: '/extend/post',
+axios('/extend/post', {
   method: 'post',
   data: {
-    msg: 'hello'
+    msg: 'hello i am new'
   }
 })
+
+// axios({
+//   url: '/extend/post',
+//   method: 'post',
+//   data: {
+//     msg: 'hi'
+//   }
+// })
+
+// axios.request({
+//   url: '/extend/post',
+//   method: 'post',
+//   data: {
+//     msg: 'hello'
+//   }
+// })
 
 // axios.get('/extend/get')
 
