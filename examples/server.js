@@ -77,6 +77,10 @@ router.post('/extend/post', function(req, res) {
   res.json(req.body)
 })
 
+router.get('/extend/user', function(req, res) {
+  res.json(req.query)
+})
+
 app.use(router)
 module.exports = app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}, Ctrl+C to stop`)
