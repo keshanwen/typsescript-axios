@@ -23,7 +23,7 @@ app.use(express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 1234
 
 const router = express.Router()
 
@@ -71,6 +71,10 @@ router.get('/error/timeout', function(req, res) {
       msg: `hello world`
     })
   }, 3000)
+})
+
+router.post('/extend/post', function(req, res) {
+  res.json(req.body)
 })
 
 app.use(router)
