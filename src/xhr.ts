@@ -1,9 +1,10 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './types'
 import { parseHeaders } from './helpers/headers'
+import { rejects } from 'assert'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
-  return new Promise((resolve) => {
-    const { data = null, url, method = 'get', headers, responseType } = config
+  return new Promise((resolve,reject) => {
+    const { data = null, url, method = 'get', headers, responseType, timeout  } = config
 
     const request = new XMLHttpRequest()
 
@@ -11,15 +12,29 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       request.responseType = responseType
     }
 
+    if (timeout) {
+      request.timeout = timeout
+    }
+
+
     request.open(method.toUpperCase(), url, true)
+
+    request.ontimeout = function handleTimeout () {
+      reject(new Error(`Timeout of ${timeout} ms exceeded`))
+    }
 
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) {
         return
       }
 
+      if (request.status === 0) {
+        return
+      }
+
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
-      const responseData = responseType && responseType !== 'text' ? request.response : request.responseText
+      const responseData =
+        responseType && responseType !== 'text' ? request.response : request.responseText
       const response: AxiosResponse = {
         data: responseData,
         status: request.status,
@@ -28,7 +43,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request
       }
-      resolve(response)
+      handleResponse(response)
+    }
+
+    function handleResponse(response: AxiosResponse) {
+      if (response.status >= 200 && response.status < 300) {
+        resolve(response)
+      } else {
+        reject(new Error(`Request failed with status code ${response.status}`))
+      }
     }
 
     Object.keys(headers).forEach((name) => {
