@@ -81,6 +81,12 @@ router.get('/extend/user', function(req, res) {
   res.json(req.query)
 })
 
+router.get('/interceptor/get', function(req, res) {
+  res.json({
+    msg: `hello world`
+  })
+})
+
 app.use(router)
 module.exports = app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}, Ctrl+C to stop`)
