@@ -23,7 +23,7 @@ app.use(express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const port = process.env.PORT || 1234
+const port = process.env.PORT || 8080
 
 const router = express.Router()
 
@@ -89,6 +89,10 @@ router.get('/interceptor/get', function(req, res) {
 
 router.post('/config/post', function(req, res) {
   res.json(req.body)
+})
+
+router.get('/more/get', function(req, res) {
+  res.json(req.cookies)
 })
 
 registerCancelRouter()

@@ -5,7 +5,7 @@ import { rejects } from 'assert'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve,reject) => {
-    const { data = null, url, method = 'get', headers, responseType, timeout,cancelToken   } = config
+    const { data = null, url, method = 'get', headers, responseType, timeout,cancelToken,withCredentials  } = config
 
     const request = new XMLHttpRequest()
 
@@ -24,6 +24,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       })
     }
 
+    if (withCredentials) {
+      request.withCredentials = true
+    }
 
     request.open(method.toUpperCase(), url, true)
 
