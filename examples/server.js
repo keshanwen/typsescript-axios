@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
+const multipart = require('connect-multiparty')
+const path = require('path')
 const WebpackConfig = require('./webpack.config')
 
 const app = express()
@@ -23,7 +25,11 @@ app.use(express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const port = process.env.PORT || 8080
+app.use(multipart({
+  uploadDir: path.resolve(__dirname, 'upload-file')
+}))
+
+const port = process.env.PORT || 1234
 
 const router = express.Router()
 
@@ -93,6 +99,11 @@ router.post('/config/post', function(req, res) {
 
 router.get('/more/get', function(req, res) {
   res.json(req.cookies)
+})
+
+router.post('/more/upload', function(req, res) {
+  console.log(req.body, req.files)
+  res.end('upload success!')
 })
 
 registerCancelRouter()
