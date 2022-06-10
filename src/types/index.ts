@@ -18,9 +18,11 @@ export interface AxiosRequestConfig {
   transformResponse?: AxiosTransformer | AxiosTransformer[]
   cancelToken?: CancelToken
   withCredentials?: boolean
+  auth?: AxiosBasicCredentials
   [propName: string]: any
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
+  validateStatus?: (status: number) => boolean
 }
 
 export interface AxiosResponse<T = any> {
@@ -139,4 +141,9 @@ export interface AxiosStatic extends AxiosInstance {
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (value: any) => boolean
+}
+
+export interface AxiosBasicCredentials {
+  username: string
+  password: string
 }

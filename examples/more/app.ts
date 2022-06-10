@@ -1,6 +1,7 @@
 import axios from '../../src/index'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
+import { AxiosError } from  '../../src/types/index'
 
 // document.cookie = 'a=b'
 
@@ -13,6 +14,8 @@ import NProgress from 'nprogress'
 // }).then(res => {
 //   console.log(res)
 // })
+
+/*
 const instance = axios.create()
 
 function calculatePercentage(loaded: number, total: number) {
@@ -70,4 +73,33 @@ uploadEl!.addEventListener('click', e => {
 
     instance.post('/more/upload', data)
   }
+})
+*/
+
+// axios.post('/more/post', {
+//   a: 1
+// }, {
+//   auth: {
+//     username: 'Yee',
+//     password: '123456'
+//   }
+// }).then(res => {
+//   console.log(res)
+// })
+
+axios.get('/more/304').then(res => {
+  console.log(res)
+}).catch((e: AxiosError) => {
+  // console.log(e.message,'error~~~~~~~~~~~~~~~')
+  console.error(e.message)
+})
+
+axios.get('/more/304', {
+  validateStatus(status) {
+    return status >= 200 && status < 400
+  }
+}).then(res => {
+  console.log(res)
+}).catch((e: AxiosError) => {
+  console.log(e.message)
 })

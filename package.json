@@ -119,6 +119,7 @@
     "typescript": "^3.0.3"
   },
   "dependencies": {
+    "atob": "^2.1.2",
     "body-parser": "^1.20.0",
     "connect-multiparty": "^2.2.0",
     "cookie-parser": "^1.4.6",
