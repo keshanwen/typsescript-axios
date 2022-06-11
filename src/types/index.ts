@@ -19,6 +19,7 @@ export interface AxiosRequestConfig {
   cancelToken?: CancelToken
   withCredentials?: boolean
   auth?: AxiosBasicCredentials
+  baseURL?: string
   [propName: string]: any
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
